@@ -7,50 +7,93 @@
 
 ## Overview
 
-This project is a custom Unix-like shell implemented in **C**, developed as part of a systems programming course.  
-The shell replicates core functionalities of standard Unix shells while introducing several custom-built commands.
+This repository contains a custom Unix-style shell implemented in **C**, designed to replicate core behaviors of standard command-line shells. The shell provides an interactive environment for executing both built-in and external commands, with support for process management, signal handling, job control, and I/O operations.
 
-It supports command parsing, foreground and background process execution, signal handling, logging, and multiple built-in utilities implemented from scratch.
-
----
-
-## Features
-
-- Interactive shell prompt
-- Execution of external commands using `fork`, `exec`, and `wait`
-- Foreground and background process handling
-- Signal handling for process control
-- Command logging
-- Modular design with separate source and header files
-- Custom built-in commands implemented as part of the shell
+The project focuses on low-level systems programming concepts and closely follows Unix process and signal semantics.
 
 ---
 
-## Supported Built-in Commands
+## Functionality Overview
 
-- **hop**  
-  Navigate directories with support for relative and absolute paths.
+The shell launches an interactive prompt and continuously waits for user input. It parses commands, determines whether they are built-in or external, and executes them accordingly.
 
-- **reveal**  
-  Display directory contents with optional flags.
+Key capabilities include:
+- Foreground and background process execution
+- Command parsing and argument handling
+- Signal handling for interrupts and job control
+- Process inspection and management
+- Input/output redirection and piping
 
-- **seek**  
-  Search for files and directories recursively.
+---
 
-- **ping**  
-  Send signals to processes using PID.
+## Built-in Commands and Features
 
-- **proclore**  
-  Display detailed information about a given process.
+### `hop`
+Changes the current working directory. Supports:
+- `.`
+- `..`
+- `~` (home directory)
+- `-` (previous directory)
 
-- **fg / bg**  
-  Manage foreground and background jobs.
+---
 
-- **log**  
-  Maintain a log of executed commands.
+### `reveal`
+Lists directory contents with support for:
+- `-a` : show hidden files  
+- `-l` : detailed listing  
 
-- **neonate**  
-  Monitor newly created processes at fixed intervals.
+Output is color-coded for improved readability.
+
+---
+
+### `log`
+Maintains a history of recently executed commands. Supports:
+- Viewing command history
+- Executing commands from history
+- Clearing stored history
+
+---
+
+### `proclore`
+Displays information about a given process, including:
+- Process ID
+- Execution status
+- Memory usage
+- Executable path
+
+---
+
+### `seek`
+Searches for files or directories with optional filters:
+- `-d` : directories only  
+- `-f` : files only  
+- `-e` : exact match  
+
+---
+
+### `activities`
+Lists currently running background processes started by the shell.
+
+---
+
+### `iMan`
+Fetches and displays manual pages from an online source.
+
+---
+
+### Job Control Commands
+- `fg` : Bring a background process to the foreground  
+- `bg` : Resume a stopped process in the background  
+
+---
+
+## Job Control and Signals
+
+The shell supports basic job control and signal handling:
+
+- **Ctrl + C** : Interrupts the currently running foreground process  
+- **Ctrl + Z** : Stops the foreground process and moves it to the background  
+- **Ctrl + D** : Exits the shell after cleanup  
 
 ---
 
@@ -75,18 +118,20 @@ To start the shell:
 
 ## Design Highlights
 
-- Modular implementation with clear separation between functionality
-- Extensive use of system calls such as `fork()`, `execvp()`, `waitpid()`, and `kill()`
-- Robust signal handling for background and foreground job control
-- Error handling for invalid commands and arguments
+- Minimal and modular C code
+- Explicit and careful use of system calls
+- Emphasis on correctness and clarity
+- Designed for extensibility rather than production deployment
+
+## Limitations
+- No advanced shell scripting support
+- Limited job control compared to full-featured shells like Bash
+- No tab completion or configurable prompts
+- Basic error handling
 
 ## Future Improvements
 
-- Command piping and redirection
-- Auto-completion support
-- Enhanced job control utilities
-- Improved error messaging and debugging support
-
-## Notes
-
-This project was developed for academic purposes and focuses on understanding low-level system interactions and shell design principles.
+-Persistent command history across sessions
+- Tab completion
+- Environment variable support
+- Improved diagnostics and error reporting
