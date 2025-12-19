@@ -1,7 +1,6 @@
 # Shell Implementation in C
 
-## Author
-**Shriya Kansal**
+## Shriya Kansal
 
 ---
 
